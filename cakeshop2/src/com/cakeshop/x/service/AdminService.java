@@ -14,7 +14,7 @@ import com.cakeshop.bean.Order;
 import com.cakeshop.bean.OrderDetail;
 import com.cakeshop.bean.Product;
 import com.cakeshop.bean.User;
-import com.cakeshop.x.bean.Admins;
+import com.cakeshop.x.bean.Admin;
 import com.cakeshop.x.dao.AdminDao;
 
 @Service
@@ -23,9 +23,9 @@ public class AdminService {
 	@Autowired
 	private AdminDao adminDao;
 	
-	public Admins login(String adminname,String adminpwd) {
+/*	public Admin login(String adminname,String adminpwd) {
 		return adminDao.selectByAdminName(adminname);
-	}
+	}*/
 
 	public List<User> showAllUsers() {
 		return adminDao.selectAllUsers();

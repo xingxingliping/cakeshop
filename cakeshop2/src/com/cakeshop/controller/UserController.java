@@ -37,17 +37,28 @@ public class UserController {
 			Model model,HttpSession session) {
 		User u= this.userService.login(userName);
 		if( u != null) {
-			if(u.getUserpwd().equals(userPwd)) {
-				session.setAttribute("loginUser", u);
-				return "redirect:index.jsp";
+			if(u.getUserState() == 1) {
+				if(u.getUserpwd().equals(userPwd)) {
+					session.setAttribute("loginUser", u);
+					return "redirect:index.jsp";
+				}else {
+					session.setAttribute("loginMsg", "用户密码错误，请重新登录！");
+					return "redirect:login.jsp";
+				}
 			}else {
-				session.setAttribute("loginMsg", "用户密码错误，请重新登录！");
+				session.setAttribute("loginMsg", "用户未激活或者已冻结");
 				return "redirect:login.jsp";
 			}
 		}else {
 			session.setAttribute("loginMsg", "您的账号密码不正确请重新登录！");
 			return "redirect:login.jsp";
 		}
+	}
+	
+	@RequestMapping("/logout")
+	public String logout(HttpSession session) {
+		session.removeAttribute("loginUser");
+		return "redirect:index.jsp";
 	}
 
 	
@@ -57,12 +68,31 @@ public class UserController {
 		Date date = new Date();
 		user.setUserTime(form.format(date));
 		boolean result = userService.register(user);
+		userService.sendMail(user.getUseremail());
 		if(result) {
-			request.setAttribute("registerMsg","用户注册成功，前去登录！");
+			request.setAttribute("registerMsg","用户注册成功，激活后前去登录！");
 			return "forward:register.jsp";
 		}else {
 			request.setAttribute("registerMsg", "用户名已存在！");
 			return "forward:register.jsp";
+		}
+	}
+	
+	@RequestMapping("/activate")
+	public String activateAccount(@RequestParam("useremail") String userEmail,HttpSession session) {
+		userService.activate(userEmail);
+		session.setAttribute("loginMsg", "用户激活成功！请登录");
+		return "redirect:login.jsp";
+	}
+	
+	@RequestMapping("/activateUpdate")
+	public String activateUpdateAccount(@RequestParam("useremail") String userEmail,HttpSession session) {
+		if(userEmail.length()!=0) {
+			User loginUser = (User) session.getAttribute("loginUser");
+			userService.updateUserEmail(userEmail,loginUser.getUserid());
+			return "redirect:personal.action";
+		}else {
+			return "redirect:personal.action";
 		}
 	}
 	
@@ -84,9 +114,13 @@ public class UserController {
 	@RequestMapping("/addProductToCart")
 	public String addProductToCart(@RequestParam("proid") int proid,HttpSession session) {
 		String id = String.valueOf(proid);
+		User loginUser = (User) session.getAttribute("loginUser");
 		Product product = userService.addProductToCart(proid);
 		Map<String,ProductItem> cart = (Map<String, ProductItem>) session.getAttribute("cart");
-		
+		if(loginUser == null) {
+			session.setAttribute("loginMsg", "请您先登录！再购买商品！");
+			return "redirect:login.jsp";
+		}
 		if(cart == null) {
 			cart = new HashMap<String,ProductItem>();
 		}
@@ -155,15 +189,8 @@ public class UserController {
 	@RequestMapping("/createOrder")
 	public String updateUserOrder(HttpSession session) {
 		User loginUser = (User) session.getAttribute("loginUser");
-		if(loginUser == null) {
-			session.setAttribute("loginMsg", "请您先登录！再去下单！");
-			return "redirect:login.jsp";
-		}
-		if(loginUser.getUserAddress() == null || loginUser.getUserAddress().trim().isEmpty()) {
-			session.setAttribute("orderMsg", "请您先设置收货地址！再去下单！");
-			return "redirect:personal.action";
-		}
 		Map<String,ProductItem> cart = (Map<String, ProductItem>) session.getAttribute("cart");
+		System.out.println("cart is:"+cart);
 		userService.updateUserOrder(loginUser.getUserid(),cart);
 		session.removeAttribute("cart");
 		return "redirect:index.jsp";
@@ -180,4 +207,5 @@ public class UserController {
 		session.setAttribute("loginUserOrder", userOrder);
 		return "redirect:order.jsp";
 	}
+	
 }

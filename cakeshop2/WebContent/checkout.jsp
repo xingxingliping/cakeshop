@@ -20,17 +20,6 @@
 <script src="js/simpleCart.min.js"> </script>
 <!-- cart -->
 <title>购物车</title>
-<style>
-  .tab{
-  border:3px solid orange;
-  
-  }
-  .tab tr th{
-  text-align:center;
-  border-right:3px solid orange;
-  border-bottom:3px solid orange;
-  }
-</style>
 </head>
 <body>
 <%@include file="header.jsp" %>
@@ -38,12 +27,14 @@
 		<div class="cart-items">
 			<div class="container">
 				<h2>My Shopping Cart</h2>
-				<table class='tab' border="3px" width="900" height="100%" >
+				<form action="piliangdelete.action">
+				<table border="1" width="900" height="100%" >
 			        <tr>
+			        	<th>选项</th>
 						<th>产品编号</th>
 						<th>产品名称</th>
 						<th>产品价格</th>
-						<th>产品展示</th>
+						<th>产品详情</th>
 						<th>产品数量</th>
 						<th>小计</th>
 						<th>操作</th>
@@ -52,6 +43,7 @@
 			        <c:forEach items="${cart}" var="c">
 			        <tr align="center">
 			        	<c:set var="zongji" value="${zongji+c.value.product.price*c.value.productItemCount}"/>
+			       	 	<td><input type="checkbox" name="tempString" value="${c.value.product.proid}"/></td>
 			       	 	<td>${c.value.product.proid}</td>
 			       	 	<td>${c.value.product.proname}</td>
 			     		<td>￥：${c.value.product.price}</td>
@@ -71,12 +63,14 @@
 			        			</c:when>
 			        			<c:otherwise>￥：${zongji}
 			        				<a href="createOrder.action"><input type="button" value="生成订单"/></a>
+			        				<input type="submit" value="删除所选商品"/>
 			        				<a href="emptyCart.action"><input type="button" value="清空购物车"/></a>
 			        			</c:otherwise>
 			        		</c:choose>
 			        	</td>
 			        </tr>
    			 </table>
+   			 </form>
    		 </div>
     </div>
 	<!--//checkout-->	

@@ -39,7 +39,7 @@ function checkForm(){
      if(username == null || username.value == ""){
         alert("用户名不能为空");
          return false;
-     }else if(username.value.match(username_)==null){
+     }else if(username.value.match(userName_)==null){
         alert("您输入的用户名与规定类型不匹配");
         return false;
      } else if(email == null || email.value == ""){
@@ -106,19 +106,19 @@ function checkForm(){
 						<h3>Personal information</h3>
 						<div class="input">
 							<span>Name<label>*</label></span>
-							<input type="text" name="username"> 
+							<input type="text" name="username" id="username"  onblur="sendRequest()"> 
 						</div>
 						<div class="input">
 							<span>Email<label>*</label></span>
-							<input type="text" name="useremail"> 
+							<input type="text" name="useremail" id="useremail"> 
 						</div>
 						<div class="input">
 							<span>Password<label>*</label></span>
-							<input type="password" name="userpwd">
+							<input type="password" name="userpwd" id="userpwd">
 						</div>
 						<div class="input">
 							<span>Confirm Password<label>*</label></span>
-							<input type="password" name="repassword">
+							<input type="password" name="repassword" id="repassword">
 						</div>
 					 	<input type="submit" value="submit">
 					 </div>

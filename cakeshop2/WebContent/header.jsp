@@ -72,32 +72,15 @@ line-height：10px;
 						<c:when test="${loginUser != null}">
 							<span class="welcome">欢迎您&nbsp;${loginUser.username}</span>
 						</c:when>
+					<c:otherwise>
+        				<a href="logout.action">注销</a>
+        			</c:otherwise>
 					</c:choose>	
-					<!-- <div id="loginBox">                
-						<form id="loginForm" action="login.action" method="post">
-							<fieldset id="body">
-							    <fieldset>
-							    	<label for="username">Username</label>
-							    	<input type="text" name="username" id="username">
-							    </fieldset>
-								<fieldset>
-									<label for="password">Password</label>
-									<input type="password" name="password" id="password">
-								</fieldset>
-								<input type="submit" id="login" value="Sign in">
-								<label for="checkbox"><input type="checkbox" id="checkbox"> <i>Remember me</i></label>
-							</fieldset>
-						<p>New User ? <a class="sign" href="register.jsp">Sign Up</a> <span><a href="#">Forgot your password?</a></span></p>
-						</form>					
-					</div> -->
 				</div>
 				<div class="header-right cart">
 					<a href="checkout.jsp"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
 					<div class="cart-box">
-						<h4><a href="checkout.jsp">
-							<span class="simpleCart_total"> $0.00 </span> (<span id="simpleCart_quantity" class="simpleCart_quantity"> 0 </span>) 
-						</a></h4>
-						<p><a href="javascript:;" class="simpleCart_empty">Empty cart</a></p>
+						<p><a href="emptyCart.action" class="simpleCart_empty">Empty cart</a></p>
 						<div class="clearfix"> </div>
 					</div>
 				</div>

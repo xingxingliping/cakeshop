@@ -33,6 +33,6 @@ public class CartController {
 				}
 			}
 		}
-		return "user/cart";
+		return "redirect:checkout.jsp";
 	}
 }

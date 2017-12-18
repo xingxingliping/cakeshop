@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.cakeshop.bean.Order;
 import com.cakeshop.bean.Product;
 import com.cakeshop.bean.User;
-import com.cakeshop.x.bean.Admins;
+import com.cakeshop.x.bean.Admin;
 
 
 @Repository
@@ -17,9 +17,10 @@ public class AdminDao {
 	@Autowired
 	private SessionFactory sessionFactory;
 	
-	public Admins selectByAdminName(String adminname) {
-		return (Admins) this.sessionFactory.getCurrentSession().createQuery("from Admins a where a.adminname=?").setParameter(0, adminname).uniqueResult();
-	}
+/*	public Admin selectByAdminName(String adminname) {
+		System.out.println(adminname);
+		return (Admin) this.sessionFactory.getCurrentSession().createQuery("from Admin a where a.adminname=?").setParameter(0, adminname).uniqueResult();
+	}*/
 
 	public List<User> selectAllUsers() {
 		return  this.sessionFactory.getCurrentSession().createQuery("from User").list();
@@ -48,7 +49,7 @@ public class AdminDao {
 
 	public void deleteProductById(int productid) {
 		this.sessionFactory.getCurrentSession().createQuery("delete from Product where proid=?").setParameter(0,productid).executeUpdate();
-		
+	
 	}
 
 	public void addProduct(Product product) {

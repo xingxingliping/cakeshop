@@ -37,18 +37,22 @@
 		        </tr>
 		        <c:set var="zongji" value="0"/>
 		        <c:forEach items="${orderDetailSet}" var="uo">
-		        <c:set var="zongji" value="${zongji+uo.productprice*uo.productitemcount}"/>
+		        <c:set var="zongji" value="${zongji+uo.price*uo.productitemcount}"/>
 		        <tr align="center">
-		       	 	<td>${uo.productid}</td>
-		       	 	<td>${uo.productname}</td>
-		       	 	<td>${uo.productprice}</td>
-		       	 	<td><img src="${uo.productimgurl}" width="75px" height="75px"/></td>
+		       	 	<td>${uo.proid}</td>
+		       	 	<td>${uo.proname}</td>
+		       	 	<td>${uo.price}</td>
+		       	 	<td><img src="${uo.listimg}" width="90px" height="90px"/></td>
 		       	 	<td>${uo.productitemcount}</td>
 		  		</tr>
 		        </c:forEach>
     		  	<tr align="center">
-		  			<td colspan="6">订单总金额￥：${zongji}</td>
+		  			<td colspan="6">
+		  				订单总金额￥：${zongji}
+		  				<a href="#"><input type="button" value="确认支付"/></a>
+		  			</td>
 		  		</tr>
+		  		
     		</table>
 		</div>
 	</div>		

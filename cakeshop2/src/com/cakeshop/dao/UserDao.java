@@ -5,6 +5,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.cakeshop.bean.Order;
 import com.cakeshop.bean.Product;
 import com.cakeshop.bean.User;
 
@@ -25,7 +26,6 @@ public class UserDao {
 	
 	public User selectByUserName(String userName) {
 		User u = (User)sessionFactory.getCurrentSession().createQuery("from User u where u.username = ?").setParameter(0,userName).uniqueResult();
-/*		System.out.println(u.getUsername());*/
 		return u;
 	}
 	
@@ -38,9 +38,20 @@ public class UserDao {
 		return (Product)sessionFactory.getCurrentSession().createQuery("from Product p where p.proid = ?").setParameter(0,proid).uniqueResult();	
 	}
 	
-	public void updateUser(User user) {
+	public void createOrder(Order order) {
 		Session session = sessionFactory.getCurrentSession();
-		session.update(user);
+		session.save(order);
+	}
+	
+	public User selectByUserByUserEmail(String userEmail) {
+		User u = (User)sessionFactory.getCurrentSession().createQuery("from User u where u.useremail = ?").setParameter(0,userEmail).uniqueResult();
+		return u;
+	}
+
+	public void updateUserEmail(String email,int id) {
+		User u = selectByUserId(id);
+		u.setUseremail(email);
+		this.sessionFactory.getCurrentSession().update(u);
 	}
 	
 }

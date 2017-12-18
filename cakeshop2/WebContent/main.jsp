@@ -24,14 +24,8 @@
 				<canvas id="demo-canvas"></canvas>
 				<div class="logo_box">
 					<h3>请您选择要进入的系统</h3>
-					<table border="1" align="center" >
-						<tr><td>
-							<a href="/cakeshop2/index.jsp"><input type="button" style="font-size:50px;" value="用  户 系 统"></a>
-						</td></tr>
-						<tr><td>
-							<a href="admin/login.jsp"><input type="button" style="font-size:50px;" value="管理员系统"></a>
-						</td></tr>
-					</table>
+							<a class="act-but submit" href="/cakeshop2/index.jsp" style="color: #FFFFFF">用户登录系统</a>
+							<a class="act-but submit" href="admin/login.jsp" style="color: #FFFFFF">管理员登录系统</a>
 					</div>
 				</div>
 			</div>

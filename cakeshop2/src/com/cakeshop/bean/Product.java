@@ -1,4 +1,4 @@
-package com.cakeshop.bean;
+package com.cakeshop.bean;  
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

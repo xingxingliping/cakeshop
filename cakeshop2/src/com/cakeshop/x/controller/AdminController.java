@@ -18,7 +18,7 @@ import com.cakeshop.bean.Order;
 import com.cakeshop.bean.OrderDetail;
 import com.cakeshop.bean.Product;
 import com.cakeshop.bean.User;
-import com.cakeshop.x.bean.Admins;
+import com.cakeshop.x.bean.Admin;
 import com.cakeshop.x.service.AdminService;
 
 @Controller
@@ -29,9 +29,13 @@ public class AdminController {
 	//管理员登录
 		@RequestMapping("/admin/login")
 		public String adminLogin(@RequestParam("adminname") String adminname,@RequestParam("adminpwd") String adminpwd,HttpSession session) {
-			Admins admin = adminService.login(adminname,adminpwd);
-			session.setAttribute("loginAdmin", admin);
-			if(admin.getAdminpwd().equals(adminpwd)) {
+	/*		Admin admin = adminService.login(adminname,adminpwd);*/
+		/*	session.setAttribute("loginAdmin", admin);*/
+			if(adminname.equals("qiqi")&& adminpwd.equals("qiqi")) {
+				Admin admin = new Admin();
+				admin.setAdminname(adminname);
+				admin.setAdminpwd(adminpwd);
+				session.setAttribute("loginAdmin", admin);
 				return "admin/index";
 			}else {
 				return "admin/login";
